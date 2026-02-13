@@ -4,7 +4,7 @@ import '../domain/servico.dart';
 
 class FormServicoPage extends StatefulWidget {
   final ServicoController controller;
-  final Servico? servico; // Se vier preenchido, é modo edição
+  final Servico? servico;
 
   const FormServicoPage({super.key, required this.controller, this.servico});
 
@@ -29,7 +29,7 @@ class _FormServicoPageState extends State<FormServicoPage> {
   void _salvar() {
     if (_formKey.currentState!.validate()) {
       final novoServico = Servico(
-        id: widget.servico?.id ?? DateTime.now().millisecondsSinceEpoch,
+        id: widget.servico?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
         titulo: _tituloCtrl.text,
         descricao: _descCtrl.text,
       );
@@ -56,12 +56,12 @@ class _FormServicoPageState extends State<FormServicoPage> {
               TextFormField(
                 controller: _tituloCtrl,
                 decoration: const InputDecoration(labelText: "Título"),
-                validator: (v) => v!.isEmpty ? "Obrigatório" : null,
+                validator: (v) => v == null || v.isEmpty ? "Obrigatório" : null,
               ),
               TextFormField(
                 controller: _descCtrl,
                 decoration: const InputDecoration(labelText: "Descrição"),
-                validator: (v) => v!.isEmpty ? "Obrigatório" : null,
+                validator: (v) => v == null || v.isEmpty ? "Obrigatório" : null,
               ),
               const SizedBox(height: 20),
               ElevatedButton(onPressed: _salvar, child: const Text("Salvar"))

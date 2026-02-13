@@ -12,9 +12,16 @@ class ListaServicosPage extends StatefulWidget {
 }
 
 class _ListaServicosPageState extends State<ListaServicosPage> {
+  
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.carregar();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final lista = widget.controller.carregar(); // Regra: Tela acessa Controller
+    final lista = widget.controller.lista;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Laboratório Mobile")),
@@ -55,7 +62,9 @@ class _ListaServicosPageState extends State<ListaServicosPage> {
         builder: (context) => FormServicoPage(controller: widget.controller, servico: servico),
       ),
     );
-    setState(() {}); // Atualiza a lista quando volta do formulário
+    setState(() {
+      widget.controller.carregar();
+    });
   }
 
   void _confirmarExclusao(Servico s) {
@@ -68,7 +77,7 @@ class _ListaServicosPageState extends State<ListaServicosPage> {
           TextButton(onPressed: () => Navigator.pop(context), child: const Text("Não")),
           TextButton(
             onPressed: () {
-              widget.controller.remover(s.id.toString());
+              widget.controller.remover(s.id);
               Navigator.pop(context);
               setState(() {});
               ScaffoldMessenger.of(context).showSnackBar(

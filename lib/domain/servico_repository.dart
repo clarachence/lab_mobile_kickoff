@@ -1,6 +1,6 @@
 import 'servico.dart';
 
-abstract class IServicoRepository {
+abstract class ServicoRepository {
   List<Servico> getAll();
   void add(Servico s);
   void update(Servico s);
